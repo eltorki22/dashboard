@@ -1,0 +1,135 @@
+<div class="overlay">
+  <div class="popup">
+    <h2>'Create a new Task</h2>
+    <a class="close" (click)="OnCloseForm()">&times;</a>
+    <div class="content">
+      <section class="container">
+        <form #f="ngForm" action="#" (ngSubmit)="onSubmit(f)" class="form">
+          <div class="input-box">
+            <label>Title*</label>
+            <input
+              type="text"
+              required
+              ngModel
+              #title="ngModel"
+              name="title"
+              minlength="3"
+              required
+              
+              
+            />
+
+            
+            <ng-container
+              *ngIf="f.submitted || (title.invalid && title.touched)"
+            >
+              <small *ngIf="title.errors?.['required']"
+                >Title is Required</small
+              >
+              <small *ngIf="title.errors?.['minlength']"
+                >Title must be at least 3 characters</small
+              >
+
+              <small *ngIf="title.errors?.['tripleLetters']">
+                Title should not contain 3 consecutive identical letters
+              </small>
+            </ng-container>
+          </div>
+          <div class="input-box">
+            <label>Description*</label>
+            <textarea
+              rows="8"
+              required
+              ngModel
+              #desc="ngModel"
+              minlength="10"
+              name="desc"
+            ></textarea>
+            <ng-container *ngIf="f.submitted || (desc.invalid && desc.touched)">
+              <small *ngIf="desc.errors?.['required']">Desc is Required</small>
+              <small *ngIf="desc.errors?.['minlength']"
+                >Desc must be at least 10 characters</small
+              >
+            </ng-container>
+          </div>
+          <div class="column" ngModelGroup="assign_created">
+            <div class="input-box">
+              <label>Assigned To</label>
+              <input
+                type="text"
+                required
+                ngModel
+                #assgin="ngModel"
+                name="assgin"
+                required
+              />
+              <ng-container
+                *ngIf="f.submitted || (assgin.invalid && assgin.touched)"
+              >
+                <small *ngIf="assgin.errors?.['required']"
+                  >Assgin To is Required</small
+                >
+              </ng-container>
+            </div>
+            <div class="input-box">
+              <label>Created At</label>
+              <input
+                type="date"
+                required
+                ngModel
+                #created="ngModel"
+                name="created"
+                required
+              />
+              <ng-container
+                *ngIf="f.submitted || (created.invalid && created.touched)"
+              >
+                <small *ngIf="created.errors?.['required']"
+                  >created At is Required</small
+                >
+              </ng-container>
+            </div>
+          </div>
+          <div class="input-box address">
+            <div class="column" ngModelGroup="prio_status">
+              <div class="select-box">
+                <select required ngModel #sel1="ngModel" name="prio">
+                  <option hidden>Priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                  <option value="critical">Critical</option>
+                </select>
+
+                <ng-container
+                  *ngIf="f.submitted || (sel1.invalid && sel1.touched)"
+                >
+                  <small *ngIf="sel1.errors?.['required']">
+                    Priority is Required</small
+                  >
+                </ng-container>
+              </div>
+              <div class="select-box">
+                <select required ngModel #sel2="ngModel" name="status">
+                  <option hidden>Status</option>
+                  <option value="open">Open</option>
+                  <option value="started">Started</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="complete">Complete</option>
+                </select>
+                <ng-container
+                  *ngIf="f.submitted || (sel2.invalid && sel2.touched)"
+                >
+                  <small *ngIf="sel2.errors?.['required']">
+                    Status is Required</small
+                  >
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <button>{{ isEditMode ? "Update Task" : "Create Task" }}</button>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

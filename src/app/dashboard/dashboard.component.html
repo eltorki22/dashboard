@@ -1,0 +1,69 @@
+<app-spinner *ngIf="showloading"></app-spinner>
+<app-create-task
+  *ngIf="showCreateTaskForm"
+  (CloseForm)="CloseCreateTaskForm()"
+  (SubmitData)="onSubmit($event)"
+  [isEditMode]="EditMode"
+  [SelectedTask]="selectTask"
+
+></app-create-task>
+
+<app-task-details
+  *ngIf="showTaskDetails"
+[DataDetails]="DetailsData"
+  (showDetailDatachange)="closeDetails()"
+></app-task-details>
+  <!-- [showDetailData]="closeDetails()" -->
+<div class="dashboard-container">
+  <div style="display: flex">
+    <div style="width: 50%">
+      <h2>Dashboard</h2>
+    </div>
+    <div style="width: 50%; text-align: right">
+      <button class="create-task-btn" (click)="OpenCreateTaskForm()">
+        Create Task
+      </button>
+      <!-- <button class="create-task-btn"  (click)="FetchTasks()">Fetch Tasks</button> Optional  -->
+      <button class="create-task-btn">Fetch Tasks</button>
+      <button class="create-task-btn" (click)="clearTasks()">
+        Clear Tasks
+      </button>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="dashboard-item-container">
+    <div class="task-item" *ngFor="let Task of DataTasks">
+      <div class="task-title">
+        <h3>{{ Task.title }}</h3>
+      </div>
+      <p><b>Assigned to: </b>{{ Task.assign_created.assgin }}</p>
+      <p><b>Priority: </b>{{ Task.prio_status.prio }}</p>
+      <p><b>Status: </b>{{ Task.prio_status.status }}</p>
+      <div class="task-action-icons">
+        <button
+          class="task-action-btn"
+          title="Detail"
+          (click)="showDetails(Task.id)"
+        >
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </button>
+        <button
+          class="task-action-btn"
+          title="Edit"
+          (click)="updateTask(Task.id, Task)"
+        >
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </button>
+        <button
+          class="task-action-btn"
+          title="Delete"
+          (click)="deleteTask(Task.id)"
+        >
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
